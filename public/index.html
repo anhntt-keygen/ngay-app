@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pocket Calculator - Máy Tính Cầm Tay</title>
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body class="bg-slate-900 text-white font-sans min-h-screen flex items-center justify-center p-4">
+
+  <div class="container max-w-4xl mx-auto flex flex-col lg:flex-row gap-8 items-stretch justify-center">
+    
+    <!-- MAIN CALCULATOR DEVICE -->
+    <div class="calculator-body w-full max-w-sm mx-auto bg-slate-850 p-6 rounded-3xl border border-slate-700 shadow-2xl flex flex-col justify-between relative overflow-hidden transition-all duration-300">
+      
+      <!-- Solar Cell & Logo -->
+      <div class="flex justify-between items-center mb-6">
+        <div class="flex items-center gap-1.5">
+          <div class="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse"></div>
+          <span class="text-xs uppercase tracking-widest font-bold text-slate-400">VibeCode-88</span>
+        </div>
+        <!-- Solar Panel Giả lập -->
+        <div class="grid grid-cols-4 gap-0.5 bg-amber-950 p-1 rounded border border-amber-800 w-20 h-6">
+          <div class="bg-amber-900 opacity-80"></div>
+          <div class="bg-amber-900 opacity-80"></div>
+          <div class="bg-amber-900 opacity-80"></div>
+          <div class="bg-amber-900 opacity-80"></div>
+        </div>
+      </div>
+
+      <!-- Screen Display Area -->
+      <div class="bg-emerald-950/80 border-2 border-slate-800 rounded-xl p-4 mb-6 shadow-inner relative text-right flex flex-col justify-end min-h-[100px] overflow-hidden">
+        <!-- Biểu thức phụ / Lịch sử nhập -->
+        <div id="display-expression" class="text-emerald-500/60 font-mono text-sm tracking-wider truncate h-6 mb-1"></div>
+        <!-- Màn hình số chính -->
+        <div id="display-current" class="text-emerald-400 font-mono text-3xl md:text-4xl tracking-widest truncate select-none leading-none">0</div>
+      </div>
+
+      <!-- Control & Number Pad Grid -->
+      <div class="grid grid-cols-4 gap-3">
+        <!-- Row 1: Clear, Backspace, Modulo, Divide -->
+        <button data-action="clear" class="btn-control bg-red-900/40 border border-red-700/50 hover:bg-red-800/60 text-red-400 py-3 rounded-2xl text-lg font-bold transition-all active:scale-95 duration-100" id="btn-clear">C</button>
+        <button data-action="backspace" class="btn-control bg-slate-800 hover:bg-slate-750 text-slate-300 py-3 rounded-2xl text-lg font-semibold transition-all active:scale-95 duration-100" id="btn-backspace">⌫</button>
+        <button data-action="operator" data-val="%" class="btn-control bg-slate-800 hover:bg-slate-750 text-emerald-400 py-3 rounded-2xl text-lg font-semibold transition-all active:scale-95 duration-100">%</button>
+        <button data-action="operator" data-val="/" class="btn-control bg-amber-600/20 border border-amber-500/30 hover:bg-amber-500/40 text-amber-400 py-3 rounded-2xl text-xl font-bold transition-all active:scale-95 duration-100" id="btn-divide">÷</button>
+
+        <!-- Row 2: 7, 8, 9, Multiply -->
+        <button data-action="number" data-val="7" class="btn-num bg-slate-800 hover:bg-slate-700 text-white py-4 rounded-2xl text-lg font-bold transition-all active:scale-95 duration-100 shadow-md">7</button>
+        <button data-action="number" data-val="8" class="btn-num bg-slate-800 hover:bg-slate-700 text-white py-4 rounded-2xl text-lg font-bold transition-all active:scale-95 duration-100 shadow-md">8</button>
+        <button data-action="number" data-val="9" class="btn-num bg-slate-800 hover:bg-slate-700 text-white py-4 rounded-2xl text-lg font-bold transition-all active:scale-95 duration-100 shadow-md">9</button>
+        <button data-action="operator" data-val="*" class="btn-control bg-amber-600/20 border border-amber-500/30 hover:bg-amber-500/40 text-amber-400 py-3 rounded-2xl text-xl font-bold transition-all active:scale-95 duration-100" id="btn-multiply">×</button>
+
+        <!-- Row 3: 4, 5, 6, Subtract -->
+        <button data-action="number" data-val="4" class="btn-num bg-slate-800 hover:bg-slate-700 text-white py-4 rounded-2xl text-lg font-bold transition-all active:scale-95 duration-100 shadow-md">4</button>
+        <button data-action="number" data-val="5" class="btn-num bg-slate-800 hover:bg-slate-700 text-white py-4 rounded-2xl text-lg font-bold transition-all active:scale-95 duration-100 shadow-md">5</button>
+        <button data-action="number" data-val="6" class="btn-num bg-slate-800 hover:bg-slate-700 text-white py-4 rounded-2xl text-lg font-bold transition-all active:scale-95 duration-100 shadow-md">6</button>
+        <button data-action="operator" data-val="-" class="btn-control bg-amber-600/20 border border-amber-500/30 hover:bg-amber-500/40 text-amber-400 py-3 rounded-2xl text-xl font-bold transition-all active:scale-95 duration-100" id="btn-subtract">−</button>
+
+        <!-- Row 4: 1, 2, 3, Add -->
+        <button data-action="number" data-val="1" class="btn-num bg-slate-800 hover:bg-slate-700 text-white py-4 rounded-2xl text-lg font-bold transition-all active:scale-95 duration-100 shadow-md">1</button>
+        <button data-action="number" data-val="2" class="btn-num bg-slate-800 hover:bg-slate-700 text-white py-4 rounded-2xl text-lg font-bold transition-all active:scale-95 duration-100 shadow-md">2</button>
+        <button data-action="number" data-val="3" class="btn-num bg-slate-800 hover:bg-slate-700 text-white py-4 rounded-2xl text-lg font-bold transition-all active:scale-95 duration-100 shadow-md">3</button>
+        <button data-action="operator" data-val="+" class="btn-control bg-amber-600/20 border border-amber-500/30 hover:bg-amber-500/40 text-amber-400 py-3 rounded-2xl text-xl font-bold transition-all active:scale-95 duration-100" id="btn-add">+</button>
+
+        <!-- Row 5: Toggle +/- , 0, Decimal, Equal -->
+        <button data-action="toggle-sign" class="btn-control bg-slate-800 hover:bg-slate-750 text-slate-300 py-4 rounded-2xl text-lg font-semibold transition-all active:scale-95 duration-100">±</button>
+        <button data-action="number" data-val="0" class="btn-num bg-slate-800 hover:bg-slate-700 text-white py-4 rounded-2xl text-lg font-bold transition-all active:scale-95 duration-100 shadow-md">0</button>
+        <button data-action="decimal" class="btn-control bg-slate-800 hover:bg-slate-750 text-slate-300 py-4 rounded-2xl text-lg font-bold transition-all active:scale-95 duration-100" id="btn-decimal">.</button>
+        <button data-action="equals" class="btn-equal bg-emerald-600 hover:bg-emerald-500 text-slate-900 py-4 rounded-2xl text-2xl font-black transition-all active:scale-95 duration-100 shadow-lg shadow-emerald-900/30" id="btn-equals">=</button>
+      </div>
+    </div>
+
+    <!-- PANEL LỊCH SỬ PHÉP TÍNH -->
+    <div class="history-panel w-full max-w-sm mx-auto bg-slate-850/50 p-6 rounded-3xl border border-slate-700/80 shadow-xl flex flex-col justify-between">
+      <div>
+        <div class="flex justify-between items-center mb-4 border-b border-slate-700/50 pb-3">
+          <div class="flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <h2 class="text-md font-semibold tracking-wide text-slate-300">Lịch sử phép tính</h2>
+          </div>
+          <button id="clear-history" class="text-xs text-red-400 hover:text-red-300 transition duration-150 py-1 px-2 rounded hover:bg-red-500/10">Xóa hết</button>
+        </div>
+
+        <!-- History List -->
+        <div id="history-list" class="space-y-3 max-h-[300px] lg:max-h-[380px] overflow-y-auto pr-1">
+          <!-- Các mục lịch sử sẽ được render động từ JS -->
+        </div>
+      </div>
+      
+      <div class="mt-4 text-xs text-center text-slate-500/80 border-t border-slate-700/30 pt-3">
+        Nhấn vào bản ghi để sử dụng lại kết quả tính toán
+      </div>
+    </div>
+
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
+```
+
+---
